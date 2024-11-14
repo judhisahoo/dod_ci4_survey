@@ -262,7 +262,7 @@ class SurveyController extends BaseController
         $surveys = $cModel->getAllSurveysWithoutPagination(); // Fetch all records without pagination
 
         if(count($surveys)==0){
-            return redirect()->back()->with('status', 'Thanks you to complete the survey.');
+            return redirect()->back()->with('status', 'There not record found for export as Excel Formate.');
         }
 
         // Create a new Spreadsheet object
