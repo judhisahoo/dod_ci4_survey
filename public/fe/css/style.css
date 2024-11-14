@@ -1,0 +1,57 @@
+.rating {
+  display: flex;
+  justify-content: space-between;
+}
+
+/*.rating input[type="radio"] {
+    display: none;
+}*/
+
+.rating label {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.rating label:hover,
+.rating input[type="radio"]:checked + label {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.header-image {
+  width: 100%;
+  border-radius: 0 0 10px 10px;
+}
+
+.form-label-required::after {
+  content: " *";
+  color: red;
+}
+
+.overlay {
+  position: fixed; /* Fixed position to overlay on top of everything */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 999; /* High z-index to sit on top of other elements */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  color: white; /* Text color */
+  font-size: 2rem; /* Text size */
+  text-align: center; /* Center text */
+  pointer-events: none; /* Allow clicks to pass through the overlay */
+}
+.textlarge {
+  font-size: 20px;
+  color: #000;
+  font-weight: bold;
+}
+.btndarkblue {
+  background: #000c62;
+}
