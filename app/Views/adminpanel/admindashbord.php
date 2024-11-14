@@ -20,7 +20,7 @@
         </div>
 
         <div class="mb-3">
-        <a href="<?php echo base_url('/adminpanel/subtaskratting')?>" class="btn btn-secondary">Manage Ratting Topic</a>
+        <a href="<?php echo base_url('/adminpanel/subtaskratting')?>" class="btn btn-secondary">Manage Rating Topic</a>
         </div>
 
 </div>
