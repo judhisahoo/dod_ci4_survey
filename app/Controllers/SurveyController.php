@@ -278,6 +278,9 @@ class SurveyController extends BaseController
         $sheet->setCellValue('F1', 'Top Group');
         $sheet->setCellValue('G1', 'Major Group');
         $sheet->setCellValue('H1', 'Sub Major Group');
+        $sheet->setCellValue('I1', 'Minor Group');
+        $sheet->setCellValue('J1', 'Rating Label');
+        $sheet->setCellValue('K1', 'Rating Value');
         // Add other headers as needed
 
         // Fill data
@@ -291,6 +294,9 @@ class SurveyController extends BaseController
             $sheet->setCellValue('F' . $row, $survey['topGroupName']);
             $sheet->setCellValue('G' . $row, $survey['majorGroupName']);
             $sheet->setCellValue('H' . $row, $survey['subMajorGroupName']);
+            $sheet->setCellValue('I' . $row, $survey['minorGroupName']);
+            $sheet->setCellValue('J' . $row, $survey['rattingLabel']);
+            $sheet->setCellValue('K' . $row, $survey['ratting_value']);
             // Add other columns as needed
             $row++;
         }

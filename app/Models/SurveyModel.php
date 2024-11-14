@@ -108,13 +108,15 @@ class SurveyModel extends Model
     public function getAllSurveysWithoutPagination()
     {
         return $this
-            ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName') //, st.name AS MinorGroupName
+            ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName, st.name AS minorGroupName,str.name AS rattingLabel,ssr.ratting_value') //
             ->join('survey_user_survey AS sus', 'survey_users.id = sus.survey_user_id', 'left')
-            //->join('survey_subtask AS ss', 'sus.id = ss.survey_user_survey_id', 'left')
+            ->join('survey_subtask AS ss', 'sus.id = ss.survey_user_survey_id', 'left')
             ->join('majorgroups AS mg', 'mg.id = sus.major_group_id', 'left')
             ->join('submajorgroups AS smg', 'smg.id = sus.submajor_group_id', 'left')
             ->join('tasks AS t', 't.id = sus.task_id', 'left')
-            //->join('subtasks AS st', 'st.id = ss.subtask_id', 'left')
+            ->join('subtasks AS st', 'st.id = ss.subtask_id', 'left')
+            ->join('survey_subtask_ratting AS ssr','ss.id=ssr.survey_subtask_id','left')
+            ->join('subtasksrattings AS str','str.id=ssr.ratting_id','left')
             ->where('survey_users.status', 1)
             ->orderBy('survey_users.id', 'DESC')
             ->findAll(); // Use findAll() to get all records without pagination
