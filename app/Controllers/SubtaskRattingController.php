@@ -11,7 +11,7 @@ class SubtaskRattingController extends ResourceController
     protected $modelName = 'App\Models\SubtaskRattingModel';
     protected $format    = 'json';
 
-    public $cModel, $stModel,$title="Ratting topic(based on Minor Group)";
+    public $cModel, $stModel,$title="Rating topic (based on Minor Group)";
     function __construct()
     {
         $this->cModel = new SubTaskRattingModel();
