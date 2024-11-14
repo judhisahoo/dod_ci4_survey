@@ -9,6 +9,11 @@
         <a href="<?php echo base_url('/adminpanel/export-excel'); ?>" class="btn btn-primary">Export to Excel</a>
         </div>
     </div>
+    <?php
+        if (session()->getFlashdata('status') != '') {
+            echo '<div class="row"><div class="alert alert-info">' . session()->getFlashdata('status') . '</div></div>';
+        }
+        ?>
     <div class="row">
     <table class="table table-bordered">
         <thead>

@@ -261,6 +261,10 @@ class SurveyController extends BaseController
         $cModel = new SurveyModel();
         $surveys = $cModel->getAllSurveysWithoutPagination(); // Fetch all records without pagination
 
+        if(count($surveys)==0){
+            return redirect()->back()->with('status', 'Thanks you to complete the survey.');
+        }
+
         // Create a new Spreadsheet object
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
