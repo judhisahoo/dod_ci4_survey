@@ -313,7 +313,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?php echo base_url('/adminpanel/subtaskratting');?>">
           <i class="bi bi-list"></i>
-          <span>Manage Ratting</span>
+          <span>Manage Rating</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
