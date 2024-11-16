@@ -81,6 +81,10 @@ $routes->group("",['filter'=> 'auth'],function($routes){
 
 });
 
+$routes->get('/login','Home::login');
+$routes->get('/registration','Home::register');
+$routes->post('/survey-register','Home::registerProcess');
+$routes->post('/survey-login','Home::loginProcess');
 
 
 //$routes->get('/adminpanel/login',)

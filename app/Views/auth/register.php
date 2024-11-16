@@ -21,18 +21,33 @@
                             <div class="pt-4 pb-2">
                                 <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
                                 <?php if (session()->getFlashdata('error')): ?>
-                                    <p class="text-center small"><?php echo session()->getFlashdata('error'); ?></p>
+                                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <?php echo session()->getFlashdata('error'); ?>
+                                    </div>
                                 <?php endif; ?>
-                                <?php if (isset($validation)): ?>
-                                    <p class="text-center small">
-                                        <?= $validation->listErrors() ?>
-                                    </p>
+
+                                <?php
+                                if (session()->getFlashdata('validation')):
+                                    $dataArr = session()->getFlashdata('validation');
+                                ?>
+                                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <?php foreach ($dataArr as $k => $v): ?>
+                                            <p class="text-start small" style="margin-bottom: 0.25rem!important;">
+                                                <?= $v ?>
+                                            </p>
+                                        <?php endforeach; ?>
+                                    </div>
                                 <?php endif; ?>
                                 <?php if (session()->getFlashdata('success')): ?>
-                                    <p style="color: green;" class="text-center small"><?php echo session()->getFlashdata('success'); ?></p>
+                                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <?php echo session()->getFlashdata('success'); ?>
+                                    </div>
                                 <?php endif; ?>
                             </div>
-                            
+
                             <form action="<?php echo base_url('registerProcess'); ?>" method="post" class="row g-3 needs-validation" novalidate>
                                 <?= csrf_field() ?>
                                 <div class="col-12">

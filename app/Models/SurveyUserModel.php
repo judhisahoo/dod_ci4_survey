@@ -12,7 +12,7 @@ class SurveyUserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name','email','phone','sector','address','name_of_business'];
+    protected $allowedFields    = ['name','email','phone','sector','address','name_of_business','user_type','password'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

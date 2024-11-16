@@ -27,13 +27,6 @@ class SurveyController extends BaseController
 {
     public  $title="User Survey List",$isLastSegments = '';
 
-    public function index()
-    {
-        $majorGroupmodel= new MajorGroupModel();
-        $majorGroupData=$majorGroupmodel->where('status,1')->findAll();
-        return view('home', ['majorGroupData' => $majorGroupData]);
-    }
-
     function showSurveyForm(){
         $majorGroupmodel= new MajorGroupModel();
         $majorGroupData=$majorGroupmodel->where('status','1')->findAll();
@@ -94,6 +87,10 @@ class SurveyController extends BaseController
     }
 
     function submitSurvey(){
+        $session = session();
+        if (!$session->get('isLoggedIn')) {
+            return redirect()->to('/login')->with('error', 'You must be logged in to access this page');
+        }
         $subTaskModel =  new SubtaskModel();
         $subtask_id = $this->request->getPost('subtask_id');
         $subTaskDataArr = $subTaskModel->where('task_id', $this->request->getPost('task_id'))->findAll();
@@ -118,13 +115,16 @@ class SurveyController extends BaseController
                     break;
                 }
             }
-            if($isDataPosted == true){
+            if($isDataPosted === true){
                 break;
             }
         }
+
+        if($isDataPosted === false){
+            return redirect()->back()->withInput()->with('optionSelectionError', 'Please select any option.');
+        }
          // Define validation rules
          $validationRules = [
-            'email' => 'required|valid_email',
             'name' => 'required',
             'name_of_business' => 'required',
             'sector' => 'required',
@@ -139,9 +139,10 @@ class SurveyController extends BaseController
             return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
+        $user = $session->get('me');
+
         $dataArr=[
             'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
             'name_of_business' => $this->request->getPost('name_of_business'),
             'sector' => $this->request->getPost('sector'),
@@ -150,8 +151,8 @@ class SurveyController extends BaseController
         ];
 
         $surveyUserModel = model('SurveyUserModel');
-        $surveyUserModel->insert($dataArr);
-        $surveyUserId = $surveyUserModel->getInsertID();
+        $surveyUserModel->update($user['id'],$dataArr); //insert($dataArr);
+        $surveyUserId = $user['id'];//$surveyUserModel->getInsertID();
 
         $surveyUserSurveyModel = new SurveyUserSurveyModel();
         $surveyUserSurveyDataArr = [

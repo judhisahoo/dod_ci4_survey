@@ -33,7 +33,7 @@ class AuthController extends Controller
         // Run validation
         if (!$this->validate($validationRules)) {
             // If validation fails, return to the login page with errors
-            return redirect()->back()->withInput()->with('validation', $this->validator);
+            return redirect()->back()->withInput()->with('validation', $this->validator->getErrors());
         }
 
         $email = $this->request->getPost('email');
@@ -88,27 +88,26 @@ class AuthController extends Controller
                     'min_length' => 'Password must be at least 5 characters long.'
                 ]
             ],
-           /*'confirm_password' => [
+           'confirm_password' => [
                 'rules' => 'required|matches[password]',
                 'errors' => [
                     'required' => 'Please confirm your password.',
                     'matches' => 'Password confirmation does not match the password.'
                 ]
-            ]*/
+            ]
         ];
 
         // Run validation
         if (!$this->validate($validationRules)) {
-            print_r($this->validator);die;
             // If validation fails, return to the login page with errors
-            return redirect()->back()->withInput()->with('validation', $this->validator);
+            return redirect()->back()->withInput()->with('validation', $this->validator->getErrors());
         }
 
          // If validation passes, save the user
          $model = new UserModel();
          $data = [
-            'fanme'=> $this->request->getPost('fanme'),
-            'lanme'=> $this->request->getPost('lanme'),
+            'fname'=> $this->request->getPost('fname'),
+            'lname'=> $this->request->getPost('lname'),
              'email' => $this->request->getPost('email'),
              'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
              'status' => 1
