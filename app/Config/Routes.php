@@ -79,13 +79,15 @@ $routes->group("",['filter'=> 'auth'],function($routes){
     $routes->post('/adminpanel/subtaskratting/update/(:num)', 'SubtaskRattingController::update/$1'); // Handle form submission to update a subtask ratting
     $routes->post('/adminpanel/subtaskratting/delete/(:num)', 'SubtaskRattingController::delete/$1'); // Handle deletion of a subtask ratting
 
+    // survey users list
+    $routes->get('/adminpanel/survey-users','SurveyController::getSurveyUsers');
 });
 
 $routes->get('/login','Home::login');
 $routes->get('/registration','Home::register');
 $routes->post('/survey-register','Home::registerProcess');
 $routes->post('/survey-login','Home::loginProcess');
-
+$routes->get('/survey-logout', 'Home::logout');
 
 //$routes->get('/adminpanel/login',)
 

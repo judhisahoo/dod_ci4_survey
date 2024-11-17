@@ -247,12 +247,14 @@ class SurveyController extends BaseController
     }
 
     function listAllEmployerSuervey(){
+        $page    = (int) ($this->request->getGet('page') ?? 1);
         $cModel = new SurveyModel();
         // Define the number of records per page
         $perPage = 10;
         $data['surveys'] = $cModel->getAllSurveys($perPage);
         $data['title'] = $this->title;
         $data['pager'] = $cModel->pager;
+        $data['pageSlNo'] = $perPage*($page-1)+1;
         return view('adminpanel/survey/index', $data);
     }
 
@@ -282,12 +284,14 @@ class SurveyController extends BaseController
         $sheet->setCellValue('I1', 'Minor Group');
         $sheet->setCellValue('J1', 'Rating Label');
         $sheet->setCellValue('K1', 'Rating Value');
+        $sheet->setCellValue('L1', 'Survey User Type');
         // Add other headers as needed
 
         // Fill data
         $row = 2; // Start from the second row (first row is for headers)
         foreach ($surveys as $survey) {
-            $sheet->setCellValue('A' . $row, $survey['id']);
+            $userType = ($survey['user_type']==1)?'Employer':'institution';
+            $sheet->setCellValue('A' . $row, $row-1);
             $sheet->setCellValue('B' . $row, $survey['name']);
             $sheet->setCellValue('C' . $row, $survey['email']);
             $sheet->setCellValue('D' . $row, $survey['name_of_business']);
@@ -298,6 +302,7 @@ class SurveyController extends BaseController
             $sheet->setCellValue('I' . $row, $survey['minorGroupName']);
             $sheet->setCellValue('J' . $row, $survey['rattingLabel']);
             $sheet->setCellValue('K' . $row, $survey['ratting_value']);
+            $sheet->setCellValue('L' . $row, $userType);
             // Add other columns as needed
             $row++;
         }
@@ -314,5 +319,16 @@ class SurveyController extends BaseController
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
         exit;
+    }
+
+    public function getSurveyUsers(){
+        $this->title="Survey Users";
+        $cModel = new SurveyUserModel();
+        // Define the number of records per page
+        $perPage = 10;
+        $data['surveys'] = $cModel->getAllSurveyUser($perPage);
+        $data['title'] = $this->title;
+        $data['pager'] = $cModel->pager;
+        return view('adminpanel/survey-user/index', $data);
     }
 }

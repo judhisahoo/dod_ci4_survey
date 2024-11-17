@@ -43,4 +43,10 @@ class SurveyUserModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getAllSurveyUser($perPage = 10)
+    {
+        return $this->select('*')->where('status', 1)->orderBy('id', 'DESC')->paginate($perPage);  // Use paginate() here for pagination support
+    }
 }

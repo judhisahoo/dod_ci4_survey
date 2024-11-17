@@ -19,7 +19,7 @@
                         <div class="card-body">
 
                             <div class="pt-4 pb-2">
-                                <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                                
                                 <?php if (session()->getFlashdata('error')): ?>
                                     <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -52,14 +52,20 @@
                                 <?= csrf_field() ?>
                                 <div class="col-12">
                                     <label for="fname" class="form-label">Your first Name</label>
-                                    <input type="text" name="fname" class="form-control" id="fname" required>
-                                    <div class="invalid-feedback">Please, enter your first name!</div>
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
+                                        <input type="text" name="fname" class="form-control" id="fname" required>
+                                        <div class="invalid-feedback">Please, enter your first name!</div>
+                                    </div>
                                 </div>
 
                                 <div class="col-12">
                                     <label for="lname" class="form-label">Your Last Name</label>
-                                    <input type="text" name="lname" class="form-control" id="lname" required>
-                                    <div class="invalid-feedback">Please, enter your last name!</div>
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
+                                        <input type="text" name="lname" class="form-control" id="lname" required>
+                                        <div class="invalid-feedback">Please, enter your last name!</div>
+                                    </div>
                                 </div>
 
 
@@ -74,13 +80,19 @@
 
                                 <div class="col-12">
                                     <label for="yourPassword" class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control" id="yourPassword" required>
-                                    <div class="invalid-feedback">Please enter your password!</div>
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-key"></i></span>
+                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    </div>
                                 </div>
 
-                                <div class="col-12">Confirm Your Password</label>
-                                    <input type="password" name="confirm_password" class="form-control" id="confirm_password" required>
-                                    <div class="invalid-feedback">Please enter your conirm password!</div>
+                                <div class="col-12"><label for="yourPassword" class="form-label">Confirm Your Password</label>
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-key"></i></span>
+                                        <input type="password" name="confirm_password" class="form-control" id="confirm_password" required>
+                                        <div class="invalid-feedback">Please enter your conirm password!</div>
+                                    </div>
                                 </div>
 
                                 <!--<div class="col-12">

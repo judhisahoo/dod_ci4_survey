@@ -40,6 +40,8 @@
                 <div class="card-body">
                     <h1 class="card-title text-center textlarge">Survey Portal</h1>
                     <p class="text-center mb-4">Survey Portal: Select Your Occupation</p>
+                    
+                    <p class="text-center mb-4">Welcome <?php echo $user['name'];?> | <a href="<?php echo base_url();?>survey-logout">Logout</a></p>
 
                     <form action="<?php echo base_url('/submit-survey'); ?>" method="POST" onsubmit="return validateForm();">
                         <?= csrf_field() ?>

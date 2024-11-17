@@ -324,6 +324,12 @@
         </a>
       </li><!-- End Profile Page Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php echo base_url('/adminpanel/survey-users');?>">
+          <i class="bi bi-list"></i>
+          <span>Survey user list</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
       
     </ul>
 

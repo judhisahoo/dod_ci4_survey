@@ -27,10 +27,18 @@ class Home extends BaseController
     }
 
     function login(){
+        $session = session();
+        if ($session->get('isLoggedIn')) {
+            return redirect()->to('/survey');;
+        }
         return view('auth/fe/login');
     }
 
     function register(){
+        $session = session();
+        if ($session->get('isLoggedIn')) {
+            return redirect()->to('/survey');;
+        }
         return view('auth/fe/register');
     }
 
@@ -121,5 +129,12 @@ class Home extends BaseController
             $session->setFlashdata('error', 'Email not found');
             return redirect()->back();
         }
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/login');
     }
 }

@@ -32,7 +32,7 @@
         <tbody>
             <?php foreach ($surveys as $survey): ?>
             <tr>
-                <td><?= $survey['id'] ?></td>
+                <td><?= $pageSlNo ?></td>
                 <td><?= $survey['name'] ?></td>
                 <td><?= $survey['email'] ?></td>
                 <td><?= $survey['name_of_business'] ?></td>
@@ -42,6 +42,7 @@
                 <td><?= $survey['subMajorGroupName'] ?></td>
                 <td><?= $survey['created_at'] ?></td>
             </tr>
+            <?php $pageSlNo++;?>
             <?php endforeach; ?>
         </tbody>
     </table>
