@@ -15,7 +15,7 @@
         <tbody>
             <?php foreach ($subtasksrattings as $subtaskratting): ?>
             <tr>
-                <td><?= $subtaskratting['id'] ?></td>
+            <td><?= $pageSlNo ?></td>
                 <?php /*<td><?= $subtaskratting['subtask_id'] ?></td> */?>
                 <td><?= $subtaskratting['name'] ?></td>
                 <td>
@@ -25,6 +25,7 @@
                     </form>
                 </td>
             </tr>
+            <?php $pageSlNo++;?>
             <?php endforeach; ?>
         </tbody>
     </table>

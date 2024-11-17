@@ -250,7 +250,7 @@ class SurveyController extends BaseController
         $page    = (int) ($this->request->getGet('page') ?? 1);
         $cModel = new SurveyModel();
         // Define the number of records per page
-        $perPage = 10;
+        $perPage = 30;
         $data['surveys'] = $cModel->getAllSurveys($perPage);
         $data['title'] = $this->title;
         $data['pager'] = $cModel->pager;

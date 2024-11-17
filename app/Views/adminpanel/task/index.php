@@ -17,7 +17,7 @@
         <tbody>
             <?php foreach ($tasks as $task): ?>
             <tr>
-                <td><?= $task['id'] ?></td>
+            <td><?= $pageSlNo ?></td>
                 <?php /*<td><?= $task['submajorgroup_id'] ?></td>*/ ?>
                 <td><?= $task['name'] ?></td>
                 <td><?= $task['code'] ?></td>
@@ -29,8 +29,12 @@
                     </form>
                 </td>
             </tr>
+            <?php $pageSlNo++;?>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <div class="row">
+    <?= $pager->links('default','full_pagination'); ?>
+    </div>
 </div>
 <?= $this->endSection() ?>

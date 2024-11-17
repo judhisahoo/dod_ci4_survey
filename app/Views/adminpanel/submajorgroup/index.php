@@ -17,7 +17,7 @@
         <tbody>
             <?php foreach ($submajorgroups as $submajorgroup): ?>
             <tr>
-                <td><?= $submajorgroup['id'] ?></td>
+                <td><?= $pageSlNo ?></td>
                 <?php /*<td><?= $submajorgroup['majorgroup_id'] ?></td>*/ ?>
                 <td><?= $submajorgroup['name'] ?></td>
                 <td><?= $submajorgroup['code'] ?></td>
@@ -29,8 +29,12 @@
                     </form>
                 </td>
             </tr>
+            <?php $pageSlNo++;?>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <div class="row">
+    <?= $pager->links('default','full_pagination'); ?>
+    </div>
 </div>
 <?= $this->endSection() ?>

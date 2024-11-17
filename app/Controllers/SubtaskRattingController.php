@@ -19,9 +19,12 @@ class SubtaskRattingController extends ResourceController
     }
     public function index()
     {
-        $data['subtasksrattings'] = $this->cModel->orderBy('id','DESC')->paginate(10);
+        $page    = (int) ($this->request->getGet('page') ?? 1);
+        $perPage = 30;
+        $data['subtasksrattings'] = $this->cModel->orderBy('id','DESC')->paginate($perPage);
         $data['title'] = $this->title;
         $data['pager'] = $this->cModel->pager;
+        $data['pageSlNo'] = $perPage*($page-1)+1;
         return view('adminpanel/subtaskratting/index', $data);
     }
 

@@ -17,7 +17,7 @@
         <tbody>
             <?php foreach ($subtasks as $subtask): ?>
             <tr>
-                <td><?= $subtask['id'] ?></td>
+                <td><?= $pageSlNo ?></td>
                 <?php /*<td><?= $subtask['task_id'] ?></td>*/?>
                 <td><?= $subtask['name'] ?></td>
                 <td><?= $subtask['code'] ?></td>
@@ -29,8 +29,12 @@
                     </form>
                 </td>
             </tr>
+            <?php $pageSlNo++;?>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <div class="row">
+    <?= $pager->links('default','full_pagination'); ?>
+    </div>
 </div>
 <?= $this->endSection() ?>

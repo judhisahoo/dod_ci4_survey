@@ -20,8 +20,9 @@ class SubtaskController extends ResourceController
     }
     public function index()
     {
-        $data['subtasks'] = $this->cModel->findAll();
+        $data['subtasks'] = $this->cModel->orderBy('id','DESC')->paginate(30);
         $data['title'] = $this->title;
+        $data['pager'] = $this->cModel->pager;
         return view('adminpanel/subtask/index', $data);
     }
 

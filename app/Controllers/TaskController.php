@@ -21,8 +21,9 @@ class TaskController extends ResourceController
 
     public function index()
     {
-        $data['tasks'] = $this->cModel->findAll();
+        $data['tasks'] = $this->cModel->orderBy('id','DESC')->paginate(30);
         $data['title'] = $this->title;
+        $data['pager'] = $this->cModel->pager;
         return view('adminpanel/task/index', $data);
     }
 
