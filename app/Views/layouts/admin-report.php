@@ -24,8 +24,10 @@
   <link href="<?php echo base_url();?>public/assets/vendor/quill/quill.snow.css" rel="stylesheet">
   <link href="<?php echo base_url();?>public/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="<?php echo base_url();?>public/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="<?php echo base_url();?>public/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.bootstrap5.css" rel="stylesheet">
 
+  
   <!-- Template Main CSS File -->
   <link href="<?php echo base_url();?>public/assets/css/style.css" rel="stylesheet">
 
@@ -36,6 +38,11 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  <script>
+        var csrfName = '<?= csrf_token() ?>';
+        var csrfHash = '<?= csrf_hash() ?>';
+    </script>
 </head>
 
 <body>
@@ -379,18 +386,29 @@
   </footer><!-- End Footer -->
 
   <!-- Vendor JS Files -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="<?php echo base_url();?>public/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="<?php echo base_url();?>public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="<?php echo base_url();?>public/assets/vendor/chart.js/chart.umd.js"></script>
   <script src="<?php echo base_url();?>public/assets/vendor/echarts/echarts.min.js"></script>
   <script src="<?php echo base_url();?>public/assets/vendor/quill/quill.js"></script>
-  <script src="<?php echo base_url();?>public/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
   <script src="<?php echo base_url();?>public/assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="<?php echo base_url();?>public/assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+  <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.bootstrap5.js"></script>
+
+  <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="<?php echo base_url();?>public/assets/js/main.js"></script>
 
+  <?= $this->renderSection('javascript') ?>
 </body>
-
 </html>

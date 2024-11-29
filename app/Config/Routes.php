@@ -81,6 +81,12 @@ $routes->group("",['filter'=> 'auth'],function($routes){
 
     // survey users list
     $routes->get('/adminpanel/survey-users','SurveyController::getSurveyUsers');
+
+    // Admin Report list
+    $routes->get('/adminpanel/survey-report','AdminReportController::index');
+    $routes->post('/adminpanel/survey-generate-report','AdminReportController::showReport');
+    $routes->get('/adminpanel/survey-generate-graph/(:num)','AdminReportController::showGraph/$1');
+
 });
 
 $routes->get('/login','Home::login');
