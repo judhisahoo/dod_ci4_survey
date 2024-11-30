@@ -7,7 +7,7 @@
         <p><?php echo $v['ratting_name'] ?></p>
         <div class="rating">
             <?php for($i=1;$i<11;$i++):?>
-            <input type="radio" id="r1-<?php echo $i;?>" name="<?php echo $v['subtask_ratting_id']?>_<?php echo $i;?>" value="<?php echo $i;?>"><label for="r1-<?php echo $i;?>"><?php echo $i;?></label>
+            <input type="radio" id="r1-<?php echo $i;?>" name="<?php echo $v['subtask_ratting_id']?>" value="<?php echo $i;?>"><label for="r1-<?php echo $i;?>"><?php echo $i;?></label>
             <?php endfor;?>
         </div>
     </div>

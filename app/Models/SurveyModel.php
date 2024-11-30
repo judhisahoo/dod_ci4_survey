@@ -94,7 +94,7 @@ class SurveyModel extends Model
     {
         return $this
             ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName') //, st.name AS MinorGroupName
-            ->join('survey_user_survey AS sus', 'survey_users.id = sus.survey_user_id', 'left')
+            ->join('survey_user_survey AS sus', 'survey_users.id = sus.survey_user_id')
             //->join('survey_subtask AS ss', 'sus.id = ss.survey_user_survey_id', 'left')
             ->join('majorgroups AS mg', 'mg.id = sus.major_group_id', 'left')
             ->join('submajorgroups AS smg', 'smg.id = sus.submajor_group_id', 'left')
@@ -109,7 +109,7 @@ class SurveyModel extends Model
     {
         return $this
             ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName, st.name AS minorGroupName,str.name AS rattingLabel,ssr.ratting_value') //
-            ->join('survey_user_survey AS sus', 'survey_users.id = sus.survey_user_id', 'left')
+            ->join('survey_user_survey AS sus', 'survey_users.id = sus.survey_user_id')
             ->join('survey_subtask AS ss', 'sus.id = ss.survey_user_survey_id', 'left')
             ->join('majorgroups AS mg', 'mg.id = sus.major_group_id', 'left')
             ->join('submajorgroups AS smg', 'smg.id = sus.submajor_group_id', 'left')

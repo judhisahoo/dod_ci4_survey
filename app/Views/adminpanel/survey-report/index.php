@@ -74,7 +74,7 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
         <div class="col-2 pl-0">
-            <button type="button" class="btn btn-secondary" data-myid="" id="generategraph">Generate Graph</button>
+            <button type="button" class="btn btn-secondary" title="" id="generategraph">Generate Graph</button>
         </div>
     
     </div>
@@ -146,7 +146,7 @@ function majorGroupChange() {
             $(document).ready(function() {
                 $('#generategraph').click(function(){
                     var subtaskid = $(this).data('myid');
-                    alert('subtaskid ::' +subtaskid);
+                    //alert('subtaskid ::' +subtaskid);
                     if(subtaskid != ''){
                         location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>'+subtaskid;
                     }
@@ -248,6 +248,7 @@ function majorGroupChange() {
 
                 $('#subTaskId').change(function() {
                     var subTaskId = $(this).val();
+                    console.log('subTaskId ::',subTaskId);
                     if (subTaskId) {
                         $('#generategraph').data('myid', subTaskId);
                     }

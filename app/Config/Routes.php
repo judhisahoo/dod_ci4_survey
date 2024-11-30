@@ -95,6 +95,7 @@ $routes->post('/survey-register','Home::registerProcess');
 $routes->post('/survey-login','Home::loginProcess');
 $routes->get('/survey-logout', 'Home::logout');
 
+$routes->get('/survey1','Home::show1');
 //$routes->get('/adminpanel/login',)
 
 
