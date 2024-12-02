@@ -93,7 +93,7 @@ class SurveyModel extends Model
     public function getAllSurveys($perPage = 10)
     {
         return $this
-            ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName') //, st.name AS MinorGroupName
+            ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName,sus.created_at AS survey_date') //, st.name AS MinorGroupName
             ->join('survey_user_survey AS sus', 'survey_users.id = sus.survey_user_id')
             //->join('survey_subtask AS ss', 'sus.id = ss.survey_user_survey_id', 'left')
             ->join('majorgroups AS mg', 'mg.id = sus.major_group_id', 'left')
@@ -108,7 +108,7 @@ class SurveyModel extends Model
     public function getAllSurveysWithoutPagination()
     {
         return $this
-            ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName, st.name AS minorGroupName,str.name AS rattingLabel,ssr.ratting_value') //
+            ->select('survey_users.*, mg.name AS topGroupName, smg.name AS majorGroupName, t.name AS subMajorGroupName, st.name AS minorGroupName,str.name AS rattingLabel,ssr.ratting_value,sus.created_at AS survey_date') //
             ->join('survey_user_survey AS sus', 'survey_users.id = sus.survey_user_id')
             ->join('survey_subtask AS ss', 'sus.id = ss.survey_user_survey_id', 'left')
             ->join('majorgroups AS mg', 'mg.id = sus.major_group_id', 'left')

@@ -40,7 +40,7 @@
                 <td><?= $survey['topGroupName'] ?></td>
                 <td><?= $survey['majorGroupName'] ?></td>
                 <td><?= $survey['subMajorGroupName'] ?></td>
-                <td><?= $survey['created_at'] ?></td>
+                <td><?= $survey['survey_date'] ?></td>
             </tr>
             <?php $pageSlNo++;?>
             <?php endforeach; ?>
