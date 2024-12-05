@@ -20,14 +20,16 @@
     <div class="container">
 
         <?php
+        $pageSubmited = false;
         if (session()->getFlashdata('status') != '') {
+            $pageSubmited = true;
             echo '<div class="alert alert-info">' . session()->getFlashdata('status') . '</div>';
         }
 
         if (session()->getFlashdata('optionSelectionError') != '') {
             echo '<div class="alert alert-info">' . session()->getFlashdata('optionSelectionError') . '</div>';
         }
-        
+
         ?>
         <?php  //$this->renderSection('content') 
         ?>
@@ -40,23 +42,23 @@
                 <div class="card-body">
                     <h1 class="card-title text-center textlarge">Survey Portal</h1>
                     <p class="text-center mb-4">Survey Portal: Select Your Occupation</p>
-                    
-                    <p class="text-center mb-4">Welcome <?php echo $user['name'];?> | <a href="<?php echo base_url();?>survey-logout">Logout</a></p>
+
+                    <p class="text-center mb-4">Welcome <?php echo $user['name']; ?> | <a href="<?php echo base_url(); ?>survey-logout">Logout</a></p>
 
                     <form action="<?php echo base_url('/submit-survey'); ?>" method="POST" onsubmit="return validateForm();">
                         <?= csrf_field() ?>
                         <div class="row g-3 mb-3">
                             <div class="col-md-4">
                                 <label for="name" class="form-label form-label-required">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php echo $user['name'];?>" required>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php echo $user['name']; ?>" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="phone" class="form-label">Phone</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone" value="<?php echo $user['phone'];?>">
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone" value="<?php echo $user['phone']; ?>">
                             </div>
                             <div class="col-md-4">
                                 <label for="email" class="form-label">Email ::</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" disabled value="<?php echo $user['email'];?>">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" disabled value="<?php echo $user['email']; ?>">
                             </div>
                         </div>
 
@@ -72,7 +74,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" value="<?php echo $user['address'];?>">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" value="<?php echo $user['address']; ?>">
                             </div>
                         </div>
 
@@ -134,6 +136,13 @@
 
         <script>
             $(document).ready(function() {
+                <?php if ($pageSubmited): ?>
+                    // Your application has indicated there's an error
+                    window.setTimeout(function() {
+                        // Move to a new location or you can do something else
+                        window.location.href = "<?php echo base_url(); ?>survey-logout";
+                    }, 5000);
+                <?php endif; ?>
                 $('#major-group').change(function() {
                     var majorGroupId = $(this).val();
                     //alert(majorGroupId);
