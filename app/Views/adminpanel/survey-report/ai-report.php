@@ -50,7 +50,7 @@
     <div class="row" style="height: 50px;">
         &nbsp;
     </div>
-    <?php if(is_array($errors)) :?>
+    <?php if(is_array($errors) && !empty($error)) :?>
     <div class="row">
         <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
         <?php foreach ($errors as $error): ?>

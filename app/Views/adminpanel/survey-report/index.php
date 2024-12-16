@@ -152,7 +152,7 @@
                 + currentdate.getHours() + "_"  
                 + currentdate.getMinutes() + "_" 
                 + currentdate.getSeconds()+"_screenshot.png";
-            link.download = $fileName;
+            link.download = fileName;
             link.click();
         });
     })

@@ -230,11 +230,10 @@ class AdminReportController extends BaseController
     {
         $request = service('request');
         // Replace with your actual API key
-        $apiKey = 'AIzaSyAhQ34euf817uQOK7kbh4gnC_I6xitadbs';
+        $apiKey = env('GEMINI_API_KEY');
 
         // Prompt for the Gemini API
-        $prompt = "Analyze the following data and provide me a report";
-
+        $prompt = env('GEMINI_PROMPT');
 
         $this->title = "AI Report";
         $page    = 1;
