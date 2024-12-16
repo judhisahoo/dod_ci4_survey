@@ -235,6 +235,8 @@ class AdminReportController extends BaseController
         // Prompt for the Gemini API
         $prompt = env('GEMINI_PROMPT');
 
+        echo '$apiKey :'.$apiKey.' === $prompt ::'.$prompt;die;
+
         $this->title = "AI Report";
         $page    = 1;
         // Define the number of records per page
