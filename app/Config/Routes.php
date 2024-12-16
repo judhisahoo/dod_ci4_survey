@@ -86,7 +86,9 @@ $routes->group("",['filter'=> 'auth'],function($routes){
     $routes->get('/adminpanel/survey-report','AdminReportController::index');
     $routes->post('/adminpanel/survey-generate-report','AdminReportController::showReport');
     $routes->get('/adminpanel/survey-generate-graph/(:num)','AdminReportController::showGraph/$1');
-
+    //$routes->get('/adminpanel/ai-report','AdminReportController::aiReport');
+    //$routes->post('/adminpanel/generate-ai-report','AdminReportController::aiReportGen');
+    $routes->match(['GET', 'POST'], '/adminpanel/ai-report', 'AdminReportController::aiReport');
 });
 
 $routes->get('/login','Home::login');

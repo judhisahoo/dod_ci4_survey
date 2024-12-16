@@ -338,6 +338,12 @@
         </a>
       </li><!-- End Profile Page Nav -->
       
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php echo base_url('/adminpanel/ai-report');?>">
+          <i class="bi bi-list"></i>
+          <span>AI Report</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->

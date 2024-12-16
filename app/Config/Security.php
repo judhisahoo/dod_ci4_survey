@@ -62,7 +62,7 @@ class Security extends BaseConfig
      *
      * Defaults to two hours (7200 in seconds).
      */
-    public int $expires = 7200;
+    public int $expires = 60;
 
     /**
      * --------------------------------------------------------------------------
