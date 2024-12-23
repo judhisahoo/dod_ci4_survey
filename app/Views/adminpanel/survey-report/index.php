@@ -61,7 +61,7 @@
             </div>
             <div class="col-7 p-3">
                 <select class="form-select w-100" name="submajor_group_id" id="sub-major-group" required>
-                    <option>Selec Major group</option>
+                    <option value="">Selec Major group</option>
                     <?php foreach ($SubmajorGroups as $majorgroup): ?>
                         <option value="<?= $majorgroup['id'] ?>" <?php echo ($majorgroup['id'] == $submajor_group_id) ? 'selected' : ''; ?>><?= $majorgroup['code'] ?> :: <?= $majorgroup['name'] ?></option>
                     <?php endforeach; ?>
@@ -69,15 +69,15 @@
             </div>
             <div class="col-5 pr-0">
                 <select class="form-select w-100" id="taskId" name="task_id" style="width: 320px;" required>
-                    <option>Selec Sub Major group</option>
+                    <option value="">Selec Sub Major group</option>
                     <?php foreach ($Tasks as $majorgroup): ?>
                         <option value="<?= $majorgroup['id'] ?>" <?php echo ($majorgroup['id'] == $task_id) ? 'selected' : ''; ?>><?= $majorgroup['code'] ?> :: <?= $majorgroup['name'] ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="col-4 pr-0 pl-0">
-                <select class="form-select w-100" id="subTaskId" name="subTaskId" style="width: 320px;" required>
-                    <option>Select Minor Group</option>
+                <select class="form-select w-100" id="subTaskId" name="subTaskId" style="width: 320px;">
+                    <option value="">Select Minor Group</option>
                     <?php foreach ($SubTasks as $majorgroup): ?>
                         <option value="<?= $majorgroup['id'] ?>" <?php echo ($majorgroup['id'] == $subTaskId) ? 'selected' : ''; ?>><?= $majorgroup['code'] ?> :: <?= $majorgroup['name'] ?></option>
                     <?php endforeach; ?>
@@ -141,17 +141,17 @@
         html2canvas(element).then((canvas) => {
             // Convert the canvas to an image
             const imgData = canvas.toDataURL('image/png');
-            
+
             // Create a download link
             const link = document.createElement('a');
             link.href = imgData;
             var currentdate = new Date();
-            var fileName = "Last Sync: " + currentdate.getDate() + "_"
-                + (currentdate.getMonth()+1)  + "_" 
-                + currentdate.getFullYear() + "_"  
-                + currentdate.getHours() + "_"  
-                + currentdate.getMinutes() + "_" 
-                + currentdate.getSeconds()+"_screenshot.png";
+            var fileName = "Last Sync: " + currentdate.getDate() + "_" +
+                (currentdate.getMonth() + 1) + "_" +
+                currentdate.getFullYear() + "_" +
+                currentdate.getHours() + "_" +
+                currentdate.getMinutes() + "_" +
+                currentdate.getSeconds() + "_screenshot.png";
             link.download = fileName;
             link.click();
         });
@@ -185,8 +185,15 @@
             //var subtaskid = $(this).data('myid');
             var subtaskid = $('#subTaskId').val();
             console.log('subtaskid using data attr::' + subtaskid);
+
+            var taskId = $('#taskId').val();
+            console.log('taskId using data attr::' + taskId);
             if (subtaskid != '') {
-                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>' + subtaskid;
+                console.log('1cond');
+                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>' + subtaskid + '/subtask';
+            } else if (taskId != '') {
+                console.log('2ndcond');
+                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>' + taskId + '/task';
             }
 
             /*subtaskid = $(this).attr('title'); 

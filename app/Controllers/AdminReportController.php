@@ -60,7 +60,7 @@ class AdminReportController extends BaseController
             'major-group' => 'required',
             'submajor_group_id' => 'required',
             'task_id' => 'required',
-            'subTaskId' => 'required',
+            //'subTaskId' => 'required',
         ];
 
         // Run validation
@@ -72,11 +72,21 @@ class AdminReportController extends BaseController
         $majorGroupmodel = new MajorGroupModel();
         $majorGroupData = $majorGroupmodel->where('status', '1')->findAll();
 
-        $subTaskId = $this->request->getPost('subTaskId');
-
         $surveySubtaskRattingModel = new SurveySubtaskRattingModel();
-        $employerRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($subTaskId, 1); // this is for Employer
-        $InstututionRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($subTaskId, 2); // this is for Institution
+
+        $subTaskId = $this->request->getPost('subTaskId');
+        if($subTaskId!=null){
+            $employerRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($subTaskId, 1); // this is for Employer
+            $InstututionRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($subTaskId, 2); // this is for Institution
+        }else{
+            $task_id = $this->request->getPost('task_id');
+            $employerRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($task_id, 1, 'task'); // this is for Employer
+            $InstututionRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($task_id, 2, 'task'); // this is for Institution
+        }
+            
+
+        
+        
         //echo '<pre>';
         //print_r($InstututionRatting);
         //die;
@@ -135,22 +145,35 @@ class AdminReportController extends BaseController
         return view('adminpanel/survey-report/index', $data);
     }
 
-    function showGraph($subTaskId)
+    function showGraph($Id,$taskType="subtask")
     {
-        if (!isset($subTaskId)) {
+        if (!isset($Id)) {
             redirect('/adminpanel');
         }
 
         $db = \Config\Database::connect();
 
-        $query = $db->query('SELECT task_id FROM subtasks where id=' . $subTaskId);
-        $rowSubtasks   = $query->getRowArray();
-        if (count($rowSubtasks) == 0) {
-            redirect('/adminpanel');
-        }
+        if($taskType=='subtask'){
+            $subTaskId = $Id;
+            $query = $db->query('SELECT task_id FROM subtasks where id=' . $Id);
+            $rowSubtasks   = $query->getRowArray();
+            if (!$rowSubtasks) {
+                
+                return redirect()->to(site_url('/adminpanel'));
+            }
 
-        $query = $db->query('SELECT submajorgroup_id FROM tasks where id=' . $rowSubtasks['task_id']);
-        $rowTasks   = $query->getRowArray();
+            $query = $db->query('SELECT submajorgroup_id FROM tasks where id=' . $rowSubtasks['task_id']);
+            $rowTasks   = $query->getRowArray();
+            $taskId=$rowSubtasks['task_id'];
+        }else{
+            $subTaskId=0;
+            $taskId=$Id;
+            $query = $db->query('SELECT submajorgroup_id FROM tasks where id=' . $Id);
+            $rowTasks   = $query->getRowArray();
+            if (!$rowTasks) {
+                return redirect()->to(site_url('/adminpanel'));
+            }
+        }
 
         $query = $db->query('SELECT majorgroup_id FROM submajorgroups where id=' . $rowTasks['submajorgroup_id']);
         $rowSubmajorGroups   = $query->getRowArray();
@@ -159,8 +182,8 @@ class AdminReportController extends BaseController
         $majorGroupData = $majorGroupmodel->where('status', '1')->findAll();
 
         $surveySubtaskRattingModel = new SurveySubtaskRattingModel();
-        $employerRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($subTaskId, 1); // this is for Employer
-        $InstututionRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($subTaskId, 2); // this is for Institution
+        $employerRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($Id, 1, $taskType); // this is for Employer
+        $InstututionRatting = $surveySubtaskRattingModel->getAllRattingByMinorId($Id, 2, $taskType); // this is for Institution
         //echo '<pre>';
         //print_r($InstututionRatting);
         //die;
@@ -192,7 +215,7 @@ class AdminReportController extends BaseController
         }
 
         if (count($mergedArray) == 0) {
-            redirect('/adminpanel');
+            return redirect()->to(site_url('/adminpanel'));
         }
 
 
@@ -208,17 +231,17 @@ class AdminReportController extends BaseController
 
         $data['subTaskId'] = $subTaskId;
         $subTaskModel =  new SubtaskModel();
-        $data['SubTasks'] = $subTaskModel->where('task_id', $rowSubtasks['task_id'])->findAll();
-
-        $data['task_id'] = $rowSubtasks['task_id'];
+        $data['SubTasks'] = $subTaskModel->where('task_id', $taskId)->findAll();
+        $data['task_id'] = $taskId;
+        
         $taskmodel = new TaskModel();
         $data['Tasks'] = $taskmodel->where('submajorgroup_id', $rowTasks['submajorgroup_id'])->findAll();
 
-        $data['majorGroupId'] = $rowTasks['submajorgroup_id'];
+        $data['submajor_group_id'] = $rowTasks['submajorgroup_id'];
         $subMajorGroupModel = new SubMajorGroupModel();
         $data['SubmajorGroups'] = $subMajorGroupModel->where('majorgroup_id', $rowSubmajorGroups['majorgroup_id'])->findAll();
 
-        $data['submajor_group_id'] = $rowSubmajorGroups['majorgroup_id'];
+        $data['majorGroupId'] = $rowSubmajorGroups['majorgroup_id'];
 
         $data['reportsData'] = array_column($mergedArray, 'skill_score');
         $data['reportsCategory'] = array_column($mergedArray, 'name');
@@ -333,4 +356,6 @@ class AdminReportController extends BaseController
     
         return $content;
     }
+
+    
 }

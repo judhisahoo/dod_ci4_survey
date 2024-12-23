@@ -6,6 +6,7 @@ use App\Controllers\Adminpanel\MajorgrupController;
 /**
  * @var RouteCollection $routes
  */
+
 $routes->get('/', 'Home::index');
 $routes->get('/survey', 'Home::show');
 $routes->get('survey-form', 'SurveyController::showSurveyForm');
@@ -85,9 +86,7 @@ $routes->group("",['filter'=> 'auth'],function($routes){
     // Admin Report list
     $routes->get('/adminpanel/survey-report','AdminReportController::index');
     $routes->post('/adminpanel/survey-generate-report','AdminReportController::showReport');
-    $routes->get('/adminpanel/survey-generate-graph/(:num)','AdminReportController::showGraph/$1');
-    //$routes->get('/adminpanel/ai-report','AdminReportController::aiReport');
-    //$routes->post('/adminpanel/generate-ai-report','AdminReportController::aiReportGen');
+    $routes->get('/adminpanel/survey-generate-graph/(:num)/(:alpha)','AdminReportController::showGraph/$1/$2');
     $routes->match(['GET', 'POST'], '/adminpanel/ai-report', 'AdminReportController::aiReport');
 });
 
