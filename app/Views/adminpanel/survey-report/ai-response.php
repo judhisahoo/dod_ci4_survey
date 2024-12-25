@@ -36,11 +36,11 @@
     <div class="row">
 
         <div class="card">
-            <div class="card-body">
+            <div class="card-body pt-4">
                 <?php echo $aiResponse;?>
             </div>
-            <div class="card-footer">
-            <p class="card-text"><a href="<?php echo base_url('/adminpanel/ai-report');?>" class="btn btn-primary">Get a New AI Report</a></p>
+            <div class="card-footer ps-4">
+            <p class="card-text ps-3"><a href="<?php echo base_url('/adminpanel/ai-report');?>" class="btn btn-primary">Get a New AI Report</a></p>
             </div>
         </div>
     </div>

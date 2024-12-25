@@ -281,7 +281,7 @@ class AdminReportController extends BaseController
         }
 
         if ($request->is('post')) {
-            $this->title = "AI Genered Report";
+            $this->title = "AI Generated Report";
             $data['title'] = $this->title;
             $validationRules = [
                 'major-group' => 'required',
