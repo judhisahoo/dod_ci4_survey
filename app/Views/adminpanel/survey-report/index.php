@@ -86,16 +86,16 @@
             <div class="col-1 pr-0 pl-0">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
-            <div class="col-3 pl-0">
+            <div class="col-2 pl-0">
                 <button type="button" class="btn btn-secondary" data-myid="" title="" id="generategraph">Generate Graph</button>
             </div>
-            <div class="col-1 pl-0">
+            <!--<div class="col-1 pl-0">
                 <button type="button" class="btn btn-secondary" id="capture-btn">Capture</button>
-            </div>
+            </div> -->
 
         </div>
     </form>
-    <div class="row">&nbsp;</div>
+    <div class="row" id="capture-btn1">&nbsp;</div>
     <?php if (!empty($reports)): ?>
         <div class="row pt-4">
 
@@ -136,7 +136,7 @@
 <?= $this->section('javascript') ?>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-    document.getElementById('capture-btn').addEventListener('click', () => {
+    document.getElementById('capture-btn1').addEventListener('click', () => {
         const element = document.getElementById('example');
         html2canvas(element).then((canvas) => {
             // Convert the canvas to an image

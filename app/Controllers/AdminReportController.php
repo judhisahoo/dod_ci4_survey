@@ -463,7 +463,7 @@ class AdminReportController extends BaseController
             log_message('info', 'by using gemini api $this->formatContentToHTML() done by $content ::'.$content1);
             // Handle the response (e.g., display the generated report)
             $data['aiResponse'] = $content1;
-            echo 'KKK';
+            //echo 'KKK';
             return view('adminpanel/survey-report/ai-response', $data);
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
