@@ -275,9 +275,9 @@ class AdminReportController extends BaseController
         $data['Tasks'] = array();
         $data['SubTasks'] = array();
         if ($request->is('get')) {
-            $imagePath  = WRITEPATH . 'uploads/20241225074032.png';
-            return $this->aiGenerateReport($data, $imagePath);
-            //return view('adminpanel/survey-report/ai-report', $data);
+            //$imagePath  = WRITEPATH . 'uploads/20241225074032.png';
+            //return $this->aiGenerateReport($data, $imagePath);
+            return view('adminpanel/survey-report/ai-report', $data);
         }
 
         if ($request->is('post')) {
@@ -342,7 +342,7 @@ class AdminReportController extends BaseController
             //echo $htmlContent;die;
             $imagePath = $this->htmlContent2Image($htmlContent);
             //echo $imagePath;die;
-            $this->aiGenerateReport($data,$imagePath);
+            return $this->aiGenerateReport($data,$imagePath);
         }
     }
 
