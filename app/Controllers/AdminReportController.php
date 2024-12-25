@@ -364,9 +364,15 @@ class AdminReportController extends BaseController
     }
 
     public function htmlContent2Image($htmlContent){
+        $nowContentDirectory = WRITEPATH . 'uploads/'.date('Ymd');
+        if(!is_dir($nowContentDirectory)) //create the folder if it's not exists
+        {
+            mkdir($nowContentDirectory,0755,TRUE);
+        } 
+
         $newName= date('YmdHis').'.png';
         // Path to the image file
-        $imageFilePath  = WRITEPATH . 'uploads/'.$newName;
+        $imageFilePath  = $nowContentDirectory . '/'.$newName;
 
         // Configure Dompdf
         $options = new Options();
@@ -389,7 +395,7 @@ class AdminReportController extends BaseController
         $pdfOutput = $dompdf->output();
 
         // Save PDF to a temporary file
-        $tempPdfPath = WRITEPATH . 'uploads/temp-report.pdf';
+        $tempPdfPath = $nowContentDirectory . '/temp-report.pdf';
         file_put_contents($tempPdfPath, $pdfOutput);
 
         try {

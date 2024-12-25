@@ -47,7 +47,7 @@
     <div class="row">
         &nbsp;
     </div>
-    <form action="<?php echo base_url('/adminpanel/ai-report'); ?>" method="POST">
+    <form action="<?php echo base_url('/adminpanel/ai-report'); ?>" method="POST" onsubmit="return loadLoader();">
         <?= csrf_field() ?>
         <div class="row">
 
@@ -142,28 +142,6 @@
     }
 
     $(document).ready(function() {
-        $('#generategraph').click(function() {
-            //var subtaskid = $(this).data('myid');
-            var subtaskid = $('#subTaskId').val();
-            console.log('subtaskid using data attr::' + subtaskid);
-
-            var taskId = $('#taskId').val();
-            console.log('taskId using data attr::' + taskId);
-            if (subtaskid != '') {
-                console.log('1cond');
-                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>' + subtaskid + '/subtask';
-            } else if (taskId != '') {
-                console.log('2ndcond');
-                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>' + taskId + '/task';
-            }
-
-            /*subtaskid = $(this).attr('title'); 
-            console.log('subtaskid user title attr::' +subtaskid);
-            if(subtaskid != ''){
-                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>'+subtaskid;
-            }*/
-        })
-
         $('#major-group').change(function() {
             var majorGroupId = $(this).val();
             //alert(majorGroupId);
@@ -258,26 +236,9 @@
         });
     });
 
-    new DataTable('#example', {
-        info: false,
-        paging: false,
-        layout: {
-            topStart: {
-                buttons: [{
-                        extend: 'excelHtml5',
-                        text: "Export AS Excel",
-                        attr: {
-                            class: 'btn btn-primary buttons-pdf buttons-html5',
-                        }
-                    },
-
-                    {
-                        extend: 'pdfHtml5',
-                        text: "Export AS Pdf"
-                    }
-                ]
-            }
-        }
-    });
+    function loadLoader(){
+        $(".overlay").fadeIn();
+        return true;
+    }
 </script>
 <?= $this->endSection() ?>
