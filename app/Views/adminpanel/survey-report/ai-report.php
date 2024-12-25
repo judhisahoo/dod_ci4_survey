@@ -31,9 +31,6 @@
         pointer-events: none;
         /* Allow clicks to pass through the overlay */
     }
-    .hidden {
- list-style-type: none;
-}
 </style>
 <div class="container mt-5">
     <div class="overlay" style="display:none"><img src="http://i.imgur.com/KUJoe.gif"></div>
@@ -47,59 +44,240 @@
         echo '<div class="row"><div class="alert alert-info">' . session()->getFlashdata('status') . '</div></div>';
     }
     ?>
-    <div class="row" style="height: 50px;">
+    <div class="row">
         &nbsp;
     </div>
-    <?php if(is_array($errors) && !empty($error)) :?>
-    <div class="row">
-        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
-        <?php foreach ($errors as $error): ?>
-            <ul class="hidden">
-            <li><i class="bi bi-shield-exclamation" style="color:#FFFFFF; font-size:30px"></i> &nbsp; &nbsp; <?= esc($error) ?></li>
-            </ul>
-        <?php endforeach ?>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>
-    <div class="row" style="height: 30px;">&nbsp;</div>
-    <?php endif;?>
-    <div class="row">
+    <form action="<?php echo base_url('/adminpanel/ai-report'); ?>" method="POST">
+        <?= csrf_field() ?>
+        <div class="row">
 
-        <div class="card">
-            <div class="card-body">
-                <!--<form action="<?php // base_url('/adminpanel/generate-ai-report'); 
-                                    ?>" enctype="multipart/form-data" method="post"> -->
-                <?php echo form_open_multipart('/adminpanel/ai-report', ['onsubmit' => 'return checkSubmit();']) ?>
-                <?= csrf_field() ?>
-                <div class="row" style="height: 50px;">
-                    &nbsp;
-                </div>
-                <div class="row mb-3" style="height: 150px;">
-                    <div class="col-12 p-3">
-                        <label for="inputNumber" class="col-sm-4 col-form-label">Upload Table Image Report</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="file" id="aiDataFile" name="aiDataFile" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">&nbsp;</label>
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-                </form>
+            <div class="col-3 p-3">
+                <select name="major-group" id="major-group" class="form-select w-100 fs-6" required>
+                    <option value="">Select Top Group</option>
+                    <?php foreach ($majorgroups as $majorgroup): ?>
+                        <option value="<?= $majorgroup['id'] ?>" <?php echo ($majorgroup['id'] == $majorGroupId) ? 'selected' : ''; ?>><?= $majorgroup['code'] ?> :: <?= $majorgroup['name'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-7 p-3">
+                <select class="form-select w-100" name="submajor_group_id" id="sub-major-group" required>
+                    <option value="">Selec Major group</option>
+                    <?php foreach ($SubmajorGroups as $majorgroup): ?>
+                        <option value="<?= $majorgroup['id'] ?>" <?php echo ($majorgroup['id'] == $submajor_group_id) ? 'selected' : ''; ?>><?= $majorgroup['code'] ?> :: <?= $majorgroup['name'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-5 pr-0">
+                <select class="form-select w-100" id="taskId" name="task_id" style="width: 320px;" required>
+                    <option value="">Selec Sub Major group</option>
+                    <?php foreach ($Tasks as $majorgroup): ?>
+                        <option value="<?= $majorgroup['id'] ?>" <?php echo ($majorgroup['id'] == $task_id) ? 'selected' : ''; ?>><?= $majorgroup['code'] ?> :: <?= $majorgroup['name'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-4 pr-0 pl-0">
+                <select class="form-select w-100" id="subTaskId" name="subTaskId" style="width: 320px;">
+                    <option value="">Select Minor Group</option>
+                    <?php foreach ($SubTasks as $majorgroup): ?>
+                        <option value="<?= $majorgroup['id'] ?>" <?php echo ($majorgroup['id'] == $subTaskId) ? 'selected' : ''; ?>><?= $majorgroup['code'] ?> :: <?= $majorgroup['name'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-2 pr-0 pl-0">
+                <button type="submit" class="btn btn-primary">Get AI Report</button>
             </div>
         </div>
-    </div>
-    <div class="row">&nbsp;</div>
+    </form>
+    <div class="row" id="capture-btn">&nbsp;</div>
+    
+
 </div>
+
 <?= $this->endSection() ?>
 <?= $this->section('javascript') ?>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-    function checkSubmit() {
-        $(".overlay").fadeIn();
-        return true;
+    document.getElementById('capture-btn').addEventListener('click', () => {
+        const element = document.getElementById('example');
+        html2canvas(element).then((canvas) => {
+            // Convert the canvas to an image
+            const imgData = canvas.toDataURL('image/png');
+
+            // Create a download link
+            const link = document.createElement('a');
+            link.href = imgData;
+            var currentdate = new Date();
+            var fileName = "Last Sync: " + currentdate.getDate() + "_" +
+                (currentdate.getMonth() + 1) + "_" +
+                currentdate.getFullYear() + "_" +
+                currentdate.getHours() + "_" +
+                currentdate.getMinutes() + "_" +
+                currentdate.getSeconds() + "_screenshot.png";
+            link.download = fileName;
+            link.click();
+        });
+    })
+
+    function majorGroupChange() {
+        $('#sub-major-group').find('option').remove().end().append('<option value="">Selec Major group</option>');
+        $('#taskId').find('option').remove().end().append('<option value="">Selec Sub Major group</option>');
+        $('#subtaskId').find('option').remove().end().append('<option value="">Selec Sub Major group</option>');
     }
+
+    function submajorGroupChange() {
+        $('#taskId').find('option').remove().end().append('<option value="">Selec Sub Major group</option>');
+        $('#subtaskId').find('option').remove().end().append('<option value="">Selec Sub Major group</option>');
+    }
+
+    function taskChange() {
+        $('#subtaskId').find('option').remove().end().append('<option value="">Selec Sub Major group</option>');
+    }
+
+    function getCSRF() {
+        $.get("<?php echo base_url('/getCsrfCode'); ?>", function(data, status) {
+            //alert("Data: " + data + "\nStatus: " + status);
+            csrfHash = data;
+            $("input[name*='cmicaribbean_survey_token']").val(data);
+        });
+    }
+
+    $(document).ready(function() {
+        $('#generategraph').click(function() {
+            //var subtaskid = $(this).data('myid');
+            var subtaskid = $('#subTaskId').val();
+            console.log('subtaskid using data attr::' + subtaskid);
+
+            var taskId = $('#taskId').val();
+            console.log('taskId using data attr::' + taskId);
+            if (subtaskid != '') {
+                console.log('1cond');
+                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>' + subtaskid + '/subtask';
+            } else if (taskId != '') {
+                console.log('2ndcond');
+                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>' + taskId + '/task';
+            }
+
+            /*subtaskid = $(this).attr('title'); 
+            console.log('subtaskid user title attr::' +subtaskid);
+            if(subtaskid != ''){
+                location.href = '<?php echo base_url('/adminpanel/survey-generate-graph/'); ?>'+subtaskid;
+            }*/
+        })
+
+        $('#major-group').change(function() {
+            var majorGroupId = $(this).val();
+            //alert(majorGroupId);
+            if (majorGroupId) {
+                majorGroupChange();
+                $(".overlay").fadeIn();
+                $.ajax({
+                    url: "<?php echo base_url('/getSubMajorGroup'); ?>",
+                    type: "POST",
+                    data: {
+                        majorGroupId: majorGroupId,
+                        [csrfName]: csrfHash,
+                    },
+                    dataType: "json",
+                    success: function(states) {
+                        $(".overlay").fadeOut(2000);
+                        getCSRF();
+                        $('#sub-major-group').empty();
+                        $('#sub-major-group').append('<option value="">Select a Major Group</option>');
+                        $.each(states, function(index, state) {
+                            $('#sub-major-group').append('<option value="' + state.id + '">' + state.code + ' :: ' + state.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#sub-major-group').empty();
+                $('#sub-major-group').append('<option value="">Select a Major Group</option>');
+            }
+        });
+
+        $('#sub-major-group').change(function() {
+            var subMajorGroupId = $(this).val();
+            //alert(majorGroupId);
+            if (subMajorGroupId) {
+                submajorGroupChange();
+                $(".overlay").fadeIn();
+                $.ajax({
+                    url: "<?php echo base_url('/getTask'); ?>",
+                    type: "POST",
+                    data: {
+                        subMajorGroupId: subMajorGroupId,
+                        [csrfName]: csrfHash,
+                    },
+                    dataType: "json",
+                    success: function(tasks) {
+                        $(".overlay").fadeOut(2000);
+                        getCSRF();
+                        $('#taskId').empty();
+                        $('#taskId').append('<option value="">Select Sub Major Group</option>');
+                        $.each(tasks, function(index, task) {
+                            $('#taskId').append('<option value="' + task.id + '">' + task.code + ' :: ' + task.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#taskId').empty();
+                $('#taskId').append('<option value="">Select Sub Major Group</option>');
+            }
+        });
+
+        $('#taskId').change(function() {
+            var taskId = $(this).val();
+            //alert(majorGroupId);
+            if (taskId) {
+                taskChange();
+                $(".overlay").fadeIn();
+                $.ajax({
+                    url: "<?php echo base_url('/getSubTask'); ?>",
+                    type: "POST",
+                    data: {
+                        taskId: taskId,
+                        [csrfName]: csrfHash,
+                    },
+                    dataType: "json",
+                    success: function(subtasks) {
+                        getCSRF();
+                        $(".overlay").fadeOut(2000);
+                        $('#subTaskId-parent').show();
+                        $('#subTaskId').empty();
+                        $('#subTaskId').append('<option value="">Select a Minor Group</option>');
+                        $.each(subtasks, function(index, subtask) {
+                            $('#subTaskId').append('<option value="' + subtask.id + '">' + subtask.code + ' :: ' + subtask.name + '</option>');
+                        });
+                        //getSubTasks(taskId);
+
+                    }
+                });
+            } else {
+                $('#subTaskId').empty();
+                $('#subTaskId').append('<option value="">Select a Minor Group</option>');
+            }
+        });
+    });
+
+    new DataTable('#example', {
+        info: false,
+        paging: false,
+        layout: {
+            topStart: {
+                buttons: [{
+                        extend: 'excelHtml5',
+                        text: "Export AS Excel",
+                        attr: {
+                            class: 'btn btn-primary buttons-pdf buttons-html5',
+                        }
+                    },
+
+                    {
+                        extend: 'pdfHtml5',
+                        text: "Export AS Pdf"
+                    }
+                ]
+            }
+        }
+    });
 </script>
 <?= $this->endSection() ?>
